@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Aprendices</title>
+    <style>
+        table { width: 80%; margin: 20px auto; border-collapse: collapse; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+        th { background-color: #28a745; color: white; }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Lista de Aprendices</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Documento</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Teléfono</th>
+                <th>Correo</th>
+                <th>Fecha Nacimiento</th>
+                <th>Ciudad</th>
+                <th>Programa</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for aprendiz in aprendices %}
+            <tr>
+                <td>{{ aprendiz.documento_identidad }}</td>
+                <td>{{ aprendiz.nombre }}</td>
+                <td>{{ aprendiz.apellido }}</td>
+                <td>{{ aprendiz.telefono }}</td>
+                <td>{{ aprendiz.correo }}</td>
+                <td>{{ aprendiz.fecha_nacimiento }}</td>
+                <td>{{ aprendiz.ciudad }}</td>
+                <td>{{ aprendiz.programa }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8">No hay aprendices registrados.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

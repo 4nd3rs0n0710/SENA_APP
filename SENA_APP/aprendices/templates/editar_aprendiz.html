@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Aprendiz</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <style>
+        /* Estilos generales */
+        body {
+            background-color: #f8f9fa;
+            display: flex; /* Habilitamos Flexbox en el body */
+            flex-direction: column; /* Organiza los elementos hijos en columna */
+            min-height: 100vh; /* Asegura que el body ocupe al menos el 100% de la altura de la ventana */
+            margin: 0; /* Eliminamos el margen por defecto del body */
+        }
+        h2 { color: #198754; font-weight: bold; }
+        .card {
+            border: 1px solid #198754;
+            border-radius: 12px;
+        }
+        .btn-success {
+            background-color: #198754;
+            border: none;
+        }
+        .btn-success:hover {
+            background-color: #146c43;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        label { font-weight: 600; }
+
+        /* Estilo para el contenedor principal que empujará el footer */
+        .content-wrapper {
+            flex: 1; /* Esto hace que este contenedor ocupe todo el espacio disponible, empujando el footer hacia abajo */
+        }
+    </style>
+</head>
+<body>
+
+<!-- ✅ Contenedor principal para el contenido (excluyendo el footer) -->
+<div class="content-wrapper">
+    <!-- ✅ Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="#">SENA App</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">🏠 Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/aprendices/">👥 Lista de Aprendices</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin/">🔐 Admin</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ✅ Contenedor del formulario -->
+    <div class="container mt-4">
+        <h2 class="text-center"><i class="bi bi-pencil-square"></i> Editar Aprendiz</h2>
+        <div class="card shadow p-4 mt-4">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Documento</label>
+                        <input type="text" name="documento_identidad" value="{{ aprendiz.documento_identidad }}" class="form-control" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" name="nombre" value="{{ aprendiz.nombre }}" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Apellido</label>
+                        <input type="text" name="apellido" value="{{ aprendiz.apellido }}" class="form-control" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Teléfono</label>
+                        <input type="text" name="telefono" value="{{ aprendiz.telefono }}" class="form-control">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Correo</label>
+                        <input type="email" name="correo" value="{{ aprendiz.correo }}" class="form-control">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Fecha de Nacimiento</label>
+                        <input type="date" name="fecha_nacimiento" value="{{ aprendiz.fecha_nacimiento|date:'Y-m-d' }}" class="form-control">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Ciudad</label>
+                        <input type="text" name="ciudad" value="{{ aprendiz.ciudad }}" class="form-control">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Programa</label>
+                        <input type="text" name="programa" value="{{ aprendiz.programa }}" class="form-control">
+                    </div>
+                </div>
+
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-success me-2"><i class="bi bi-save"></i> Guardar Cambios</button>
+                    <a href="/aprendices/" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Volver</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> <!-- Fin del content-wrapper -->
+
+<!-- ✅ Footer -->
+<footer class="bg-success text-white text-center py-3"> <!-- Eliminado mt-5 ya que Flexbox lo posicionará automáticamente -->
+    <div class="container">
+        <p class="mb-1">© 2025 SENA App | Todos los derechos reservados</p>
+        <small>Desarrollado con ❤️ por el equipo de formación SENA</small>
+        <div class="mt-2">
+            <a href="/" class="text-white me-3"><i class="bi bi-house-door-fill"></i></a>
+            <a href="/admin/" class="text-white me-3"><i class="bi bi-gear-fill"></i></a>
+            <a href="https://sena.edu.co" target="_blank" class="text-white"><i class="bi bi-globe"></i></a>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

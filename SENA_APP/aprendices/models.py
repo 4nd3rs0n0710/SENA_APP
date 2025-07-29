@@ -1,0 +1,12 @@
+from django.db import models
+
+# Create your models here.
+class Aprendiz():
+    documento_identidad = models.CharField(max_length=20, unique=True)
+    nombre = models.CharField(max_length=100)
+    apellido = models.CharField(max_length=100)
+    telefono = models.CharField(max_length=10, null=True)
+    correo = models.EmailField(null=True)
+    fecha_nacimiento = models.DateField()
+    ciudad = models.CharField(max_length=100, null=True)
+    programa = models.CharField(max_length=100, null=True)

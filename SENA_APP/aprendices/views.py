@@ -2,6 +2,8 @@ from django.shortcuts import render
 from .models import Aprendiz
 from django.template import loader
 from django.http import HttpResponse
+
+
 # Create your views here.
 def aprendices(request):
     lista_aprendices = Aprendiz.objects.all().values()

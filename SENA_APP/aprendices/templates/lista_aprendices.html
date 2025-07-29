@@ -7,117 +7,114 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <style>
-        /* Estilos generales */
-        body {
-            background-color: #f8f9fa;
-            display: flex; /* Habilitamos Flexbox en el body */
-            flex-direction: column; /* Organiza los elementos hijos en columna */
-            min-height: 100vh; /* Asegura que el body ocupe al menos el 100% de la altura de la ventana */
-            margin: 0; /* Eliminamos el margen por defecto del body */
-        }
+        body { background-color: #f8f9fa; }
         h1 { text-align: center; margin-top: 20px; color: #198754; font-weight: bold; }
         .table thead { background-color: #198754; color: white; }
         .no-data { color: #6c757d; font-style: italic; }
         .search-box { border: 1px solid #198754; }
-
-        /* Estilo para el contenedor principal que empujará el footer */
-        .content-wrapper {
-            flex: 1; /* Esto hace que este contenedor ocupe todo el espacio disponible, empujando el footer hacia abajo */
+        .navbar-brand { font-weight: bold; }
+        footer {
+            background-color: #198754;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
         }
+        footer a { color: white; text-decoration: none; margin: 0 10px; }
+        footer a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
-
-<div class="content-wrapper">
-    <!-- ✅ Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
-        <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="#">SENA App</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/">🏠 Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="/aprendices/">👥 Lista de Aprendices</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/admin/">🔐 Admin</a></li>
-                </ul>
-            </div>
+<!-- ✅ Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">SENA App</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/">🏠 Inicio</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/aprendices/">👥 Lista de Aprendices</a></li>
+                <li class="nav-item"><a class="nav-link" href="/admin/">🔐 Admin</a></li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
+<!-- ✅ Título -->
+<div class="container mt-4">
+    <h1><i class="bi bi-people-fill"></i> Lista de Aprendices</h1>
 
-    <div class="container mt-4">
-        <h1><i class="bi bi-people-fill"></i> Lista de Aprendices</h1>
-
-        <!-- Buscador -->
-        <div class="card shadow-sm mt-4">
-            <div class="card-body">
-                <label for="searchInput" class="form-label">Buscar aprendiz:</label>
-                <input type="text" id="searchInput" class="form-control search-box" placeholder="Escribe un nombre, documento o ciudad...">
-            </div>
+    <!-- ✅ Buscador -->
+    <div class="card shadow-sm mt-4">
+        <div class="card-body">
+            <label for="searchInput" class="form-label">Buscar aprendiz:</label>
+            <input type="text" id="searchInput" class="form-control search-box" placeholder="Escribe un nombre, documento o ciudad...">
         </div>
+    </div>
 
-
-        <div class="card shadow-sm mt-4">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover align-middle text-center">
-                        <thead>
-                            <tr>
-                                <th>Documento</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Teléfono</th>
-                                <th>Correo</th>
-                                <th>Fecha Nacimiento</th>
-                                <th>Ciudad</th>
-                                <th>Programa</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="aprendicesTable">
-                            {% for aprendiz in lista_aprendices %}
-                            <tr>
-                                <td>{{ aprendiz.documento_identidad }}</td>
-                                <td>{{ aprendiz.nombre }}</td>
-                                <td>{{ aprendiz.apellido }}</td>
-                                <td>{{ aprendiz.telefono }}</td>
-                                <td>{{ aprendiz.correo }}</td>
-                                <td>{{ aprendiz.fecha_nacimiento }}</td>
-                                <td>{{ aprendiz.ciudad }}</td>
-                                <td>{{ aprendiz.programa }}</td>
-                                <td>
-                                    <a href="{% url 'editar_aprendiz' aprendiz.id %}" class="btn btn-warning btn-sm">
-                                        ✏️ Editar
-                                    </a>
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="9" class="no-data">⚠️ No hay aprendices registrados.</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+    <!-- ✅ Tabla -->
+    <div class="card shadow-sm mt-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle text-center">
+                    <thead>
+                        <tr>
+                            <th>Documento</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Teléfono</th>
+                            <th>Correo</th>
+                            <th>Fecha Nacimiento</th>
+                            <th>Ciudad</th>
+                            <th>Programa</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="aprendicesTable">
+                        {% for aprendiz in lista_aprendices %}
+                        <tr>
+                            <td>{{ aprendiz.documento_identidad }}</td>
+                            <td>{{ aprendiz.nombre }}</td>
+                            <td>{{ aprendiz.apellido }}</td>
+                            <td>{{ aprendiz.telefono }}</td>
+                            <td>{{ aprendiz.correo }}</td>
+                            <td>{{ aprendiz.fecha_nacimiento }}</td>
+                            <td>{{ aprendiz.ciudad }}</td>
+                            <td>{{ aprendiz.programa }}</td>
+                            <td>
+                                <a href="{% url 'editar_aprendiz' aprendiz.id %}" class="btn btn-warning btn-sm">
+                                    ✏️ Editar
+                                </a>
+                                <a href="{% url 'eliminar_aprendiz' aprendiz.id %}" class="btn btn-danger btn-sm"
+                                   onclick="return confirm('¿Estás seguro de eliminar este aprendiz?')">
+                                    🗑️ Eliminar
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="9" class="no-data">⚠️ No hay aprendices registrados.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-</div> 
+</div>
 
-
-<footer class="bg-success text-white text-center py-3"> 
-    <div class="container">
-        <p class="mb-1">© 2025 SENA App | Todos los derechos reservados</p>
-        <small>Desarrollado con ❤️ por el equipo de formación SENA</small>
-        <div class="mt-2">
-            <a href="/" class="text-white me-3"><i class="bi bi-house-door-fill"></i></a>
-            <a href="/admin/" class="text-white me-3"><i class="bi bi-gear-fill"></i></a>
-            <a href="https://sena.edu.co" target="_blank" class="text-white"><i class="bi bi-globe"></i></a>
-        </div>
-    </div>
+<!-- ✅ Footer -->
+<footer>
+    <p>© 2025 SENA App | Proyecto Educativo</p>
+    <p>
+        <a href="/">Inicio</a> | 
+        <a href="/aprendices/">Lista de Aprendices</a> | 
+        <a href="/admin/">Panel Admin</a>
+    </p>
+    <small>Desarrollado por el equipo de formación SENA</small>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

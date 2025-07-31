@@ -20,14 +20,14 @@
                     <thead>
                         <tr>
                             <th>Documento</th>
-                            <th>Tipo Documento</th> {# Asegúrate de tener este campo en tu modelo Aprendiz #}
+                            <th>Tipo Documento</th> 
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Teléfono</th>
                             <th>Correo</th>
                             <th>Fecha Nacimiento</th>
                             <th>Ciudad</th>
-                            <th>Programa</th> {# Asegúrate de tener este campo en tu modelo Aprendiz #}
+                            <th>Programa</th> 
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -40,7 +40,7 @@
                             <td>{{ aprendiz.apellido }}</td>
                             <td>{{ aprendiz.telefono }}</td>
                             <td>{{ aprendiz.correo }}</td>
-                            <td>{{ aprendiz.fecha_nacimiento|date:"d/m/Y" }}</td> {# Formato de fecha #}
+                            <td>{{ aprendiz.fecha_nacimiento|date:"d/m/Y" }}</td> 
                             <td>{{ aprendiz.ciudad }}</td>
                             <td>{{ aprendiz.programa }}</td>
                             <td>
@@ -53,9 +53,9 @@
                                 </a>
                             </td>
                         </tr>
-                        {% empty %} {# Si la lista está vacía #}
+                        {% empty %} 
                         <tr>
-                            <td colspan="10" class="no-data">⚠️ No hay aprendices registrados.</td> {# Colspan ajustado #}
+                            <td colspan="10" class="no-data">⚠️ No hay aprendices registrados.</td> 
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -65,7 +65,7 @@
     </div>
 </div>
 
-{# El script de JavaScript para la búsqueda debe ir aquí, dentro del block content, o en un block_js si lo defines en tu base #}
+
 <script>
     document.getElementById("searchInput").addEventListener("keyup", function() {
         let filtro = this.value.toLowerCase();
@@ -76,4 +76,4 @@
     });
 </script>
 
-{% endblock content %} {# Fin del bloque de contenido #}
+{% endblock content %} 

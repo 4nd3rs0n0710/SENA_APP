@@ -20,7 +20,6 @@
                 {# Título secundario y contador de instructores #}
                 <h2>Instructores Registrados</h2>
                 <span class="badge bg-info fs-6">Total: {{ total_instructores }} Instructores</span>
-                {# Botón para añadir nuevo instructor #}
                 <a href="{% url 'admin:instructores_instructor_add' %}" class="btn btn-success ms-2"> {# Corregido: btn-btn-success a btn btn-success #}
                     Nuevo Instructor
                 </a>
@@ -40,17 +39,15 @@
                             <th>Nivel Educativo</th>
                             <th>Fecha Nacimiento</th>
                             <th>Especialidad</th>
-                            {# Puedes añadir una columna de acciones si las implementas (editar/eliminar) #}
-                            <th>Acciones</th> {# Columna para botones de acción #}
                         </tr>
                     </thead>
-                    <tbody id="instructoresTable"> {# ID cambiado para este tbody #}
+                    <tbody id="instructoresTable"> 
                         {% for instructor in lista_instructores %}
                         <tr>
                             <td><strong>{{ instructor.documento_identidad }}</strong></td>
                             <td>{{ instructor.tipo_documento }}</td>
-                            {# Asumo que tienes campos 'nombre' y 'apellido' en tu modelo Instructor #}
-                            <td>{{ instructor.nombre }} {{ instructor.apellido }}</td>
+                            <td>{{ instructor.nombre }} }}</td>
+                            <td>{{ instructor.apellido }}</td>
                             <td>
                                 <a href="mailto:{{ instructor.correo }}">{{ instructor.correo }}</a>
                             </td>
@@ -62,12 +59,12 @@
                             <td>{{ instructor.especialidad }}</td>
                             <td>
                             
-                                <span class="text-muted">N/A</span> {# Muestra N/A si no hay acciones implementadas #}
+                                <span class="text-muted">N/A</span> 
                             </td>
                         </tr>
-                        {% empty %} {# Mensaje si la lista está vacía #}
+                        {% empty %} 
                         <tr>
-                            <td colspan="11" class="no-data">⚠️ No hay instructores registrados.</td> {# Colspan ajustado #}
+                            <td colspan="11" class="no-data">⚠️ No hay instructores registrados.</td> 
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -77,15 +74,14 @@
     </div>
 </div>
 
-{# Script de JavaScript para la búsqueda (igual que en aprendices, pero adaptado para instructoresTable) #}
 <script>
     document.getElementById("searchInput").addEventListener("keyup", function() {
         let filtro = this.value.toLowerCase();
-        document.querySelectorAll("#instructoresTable tr").forEach(fila => { {# ID actualizado aquí #}
+        document.querySelectorAll("#instructoresTable tr").forEach(fila => { {}
             let texto = fila.textContent.toLowerCase();
             fila.style.display = texto.includes(filtro) ? "" : "none";
         });
     });
 </script>
 
-{% endblock content %}
+{% endblock content %}}

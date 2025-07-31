@@ -1,53 +1,11 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Aprendices</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-    <style>
-        body { background-color: #f8f9fa; }
-        h1 { text-align: center; margin-top: 20px; color: #198754; font-weight: bold; }
-        .table thead { background-color: #198754; color: white; }
-        .no-data { color: #6c757d; font-style: italic; }
-        .search-box { border: 1px solid #198754; }
-        .navbar-brand { font-weight: bold; }
-        footer {
-            background-color: #198754;
-            color: white;
-            text-align: center;
-            padding: 15px;
-            margin-top: 20px;
-        }
-        footer a { color: white; text-decoration: none; margin: 0 10px; }
-        footer a:hover { text-decoration: underline; }
-    </style>
-</head>
-<body>
+{% extends "index.html" %} {# ¡INDICA QUE ESTA PLANTILLA HEREDA DE index.html! #}
 
-<!-- ✅ Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-success">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">SENA App</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="/">🏠 Inicio</a></li>
-                <li class="nav-item"><a class="nav-link active" href="/aprendices/">👥 Lista de Aprendices</a></li>
-                <li class="nav-item"><a class="nav-link" href="/admin/">🔐 Admin</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+{% block title %}Lista de Aprendices - SENA App{% endblock %} {# Define el título específico de esta página #}
 
-<!-- ✅ Título -->
+{% block content %} {# TODO el contenido de esta página debe ir dentro de este bloque #}
 <div class="container mt-4">
     <h1><i class="bi bi-people-fill"></i> Lista de Aprendices</h1>
 
-    <!-- ✅ Buscador -->
     <div class="card shadow-sm mt-4">
         <div class="card-body">
             <label for="searchInput" class="form-label">Buscar aprendiz:</label>
@@ -55,7 +13,6 @@
         </div>
     </div>
 
-    <!-- ✅ Tabla -->
     <div class="card shadow-sm mt-4">
         <div class="card-body">
             <div class="table-responsive">
@@ -63,13 +20,14 @@
                     <thead>
                         <tr>
                             <th>Documento</th>
+                            <th>Tipo Documento</th> {# Asegúrate de tener este campo en tu modelo Aprendiz #}
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Teléfono</th>
                             <th>Correo</th>
                             <th>Fecha Nacimiento</th>
                             <th>Ciudad</th>
-                            <th>Programa</th>
+                            <th>Programa</th> {# Asegúrate de tener este campo en tu modelo Aprendiz #}
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -77,26 +35,27 @@
                         {% for aprendiz in lista_aprendices %}
                         <tr>
                             <td>{{ aprendiz.documento_identidad }}</td>
+                            <td>{{ aprendiz.tipo_documento }}</td>
                             <td>{{ aprendiz.nombre }}</td>
                             <td>{{ aprendiz.apellido }}</td>
                             <td>{{ aprendiz.telefono }}</td>
                             <td>{{ aprendiz.correo }}</td>
-                            <td>{{ aprendiz.fecha_nacimiento }}</td>
+                            <td>{{ aprendiz.fecha_nacimiento|date:"d/m/Y" }}</td> {# Formato de fecha #}
                             <td>{{ aprendiz.ciudad }}</td>
                             <td>{{ aprendiz.programa }}</td>
                             <td>
-                                <a href="{% url 'editar_aprendiz' aprendiz.id %}" class="btn btn-warning btn-sm">
+                                <a href="{% url 'aprendices:editar_aprendiz' aprendiz.id %}" class="btn btn-warning btn-sm">
                                     ✏️ Editar
                                 </a>
-                                <a href="{% url 'eliminar_aprendiz' aprendiz.id %}" class="btn btn-danger btn-sm"
-                                   onclick="return confirm('¿Estás seguro de eliminar este aprendiz?')">
+                                <a href="{% url 'aprendices:eliminar_aprendiz' aprendiz.id %}" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('¿Estás seguro de eliminar este aprendiz?')">
                                     🗑️ Eliminar
                                 </a>
                             </td>
                         </tr>
-                        {% empty %}
+                        {% empty %} {# Si la lista está vacía #}
                         <tr>
-                            <td colspan="9" class="no-data">⚠️ No hay aprendices registrados.</td>
+                            <td colspan="10" class="no-data">⚠️ No hay aprendices registrados.</td> {# Colspan ajustado #}
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -106,18 +65,7 @@
     </div>
 </div>
 
-<!-- ✅ Footer -->
-<footer>
-    <p>© 2025 SENA App | Proyecto Educativo</p>
-    <p>
-        <a href="/">Inicio</a> | 
-        <a href="/aprendices/">Lista de Aprendices</a> | 
-        <a href="/admin/">Panel Admin</a>
-    </p>
-    <small>Desarrollado por el equipo de formación SENA</small>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+{# El script de JavaScript para la búsqueda debe ir aquí, dentro del block content, o en un block_js si lo defines en tu base #}
 <script>
     document.getElementById("searchInput").addEventListener("keyup", function() {
         let filtro = this.value.toLowerCase();
@@ -128,5 +76,4 @@
     });
 </script>
 
-</body>
-</html>
+{% endblock content %} {# Fin del bloque de contenido #}

@@ -10,7 +10,7 @@ class InstructorAdmin(admin.ModelAdmin):
         'telefono',
         'correo',
         'ciudad',
-        'nivel_educativo'  # ajusta según tus campos
+        'nivel_educativo'  
     ]
     
     list_filter = ['ciudad', 'nivel_educativo']

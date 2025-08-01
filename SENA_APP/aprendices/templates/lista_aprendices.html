@@ -20,7 +20,6 @@
                     <thead>
                         <tr>
                             <th>Documento</th>
-                            <th>Tipo Documento</th> 
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Teléfono</th>
@@ -35,7 +34,6 @@
                         {% for aprendiz in lista_aprendices %}
                         <tr>
                             <td>{{ aprendiz.documento_identidad }}</td>
-                            <td>{{ aprendiz.tipo_documento }}</td>
                             <td>{{ aprendiz.nombre }}</td>
                             <td>{{ aprendiz.apellido }}</td>
                             <td>{{ aprendiz.telefono }}</td>

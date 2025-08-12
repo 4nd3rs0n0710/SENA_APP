@@ -7,7 +7,7 @@ urlpatterns = [
     path('', main_views.index, name='inicio'),
     path('aprendices/', include('aprendices.urls')),
     path('instructores/', include('instructores.urls')),
-    path('', include('programas.urls')),
+    path('programas/', include('programas.urls')),
 ]
 
 # Personalización del pnel administrativo

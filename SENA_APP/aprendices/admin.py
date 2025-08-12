@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Aprendiz, Curso, InstructorCurso, AprendizCurso
 
-
+@admin.register(Aprendiz)
 class AprendizAdmin(admin.ModelAdmin):
     list_display = [
         'documento_identidad',

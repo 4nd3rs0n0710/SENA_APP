@@ -44,10 +44,9 @@
                     <tbody id="instructoresTable"> 
                         {% for instructor in lista_instructores %}
                         <tr>
-                            <td><strong>{{ instructor.documento_identidad }}</strong></td>
+                            <td><strong><a href="instructor/{{ instructor.id }}">{{ instructor.documento_identidad }}</a></strong></td>
                             <td>{{ instructor.tipo_documento }}</td>
-                            <td>{{ instructor.nombre }} }}</td>
-                            <td>{{ instructor.apellido }}</td>
+                            <td>{{ instructor.nombre_completo }} }}</td>
                             <td>
                                 <a href="mailto:{{ instructor.correo }}">{{ instructor.correo }}</a>
                             </td>
@@ -57,8 +56,11 @@
                             <td>{{ instructor.nivel_educativo }}</td>
                             <td>{{ instructor.fecha_nacimiento|date:"d/m/Y" }}</td>
                             <td>{{ instructor.especialidad }}</td>
-                            <td>
-                            
+                            <>
+                                <a href="{% url 'admin:instructoes_instructor_change' instructor.pk %}"
+                                    class="btn btn-sm btn-outline-primary">
+                                    Editar
+                        </a>
                                 <span class="text-muted">N/A</span> 
                             </td>
                         </tr>
@@ -84,4 +86,4 @@
     });
 </script>
 
-{% endblock content %}}
+{% endblock content %}

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SENA APP{% endblock %}</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+        }
+
+        .jumbotron {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+
+        .card {
+            transition: transform 0.2s;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .table th {
+            border-top: none;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(40, 167, 69, 0.05);
+        }
+
+        footer {
+            margin-top: auto;
+        }
+
+        .alert-info {
+            border-left: 4px solid #17a2b8;
+        }
+
+        .badge {
+            font-size: 0.8em;
+        }
+
+                .card-header {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+        .badge-sena {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+        .instructor-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #6c757d, #495057);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .back-link {
+            text-decoration: none;
+            color: #28a745;
+            font-weight: 500;
+        }
+        .back-link:hover {
+            color: #20c997;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+        .badge-sena {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+        .instructor-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #6c757d, #495057);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 2.5rem;
+            margin: 0 auto;
+        }
+        .info-item {
+            background: #f8f9fa;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+        .curso-card:hover {
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
+        .back-link {
+            text-decoration: none;
+            color: #28a745;
+            font-weight: 500;
+        }
+        .back-link:hover {
+            color: #20c997;
+        }
+        .status-active {
+            color: #28a745;
+        }
+        .status-inactive {
+            color: #dc3545;
+        }
+                .card-header {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+        
+        .programa-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            margin: 0 auto;
+        }
+        .info-card {
+            background: #f8f9fa;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            border-radius: 0 10px 10px 0;
+            height: 100%;
+        }
+        .curso-card:hover {
+            transform: translateY(-3px);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .back-link {
+            text-decoration: none;
+            color: #28a745;
+            font-weight: 500;
+        }
+        .back-link:hover {
+            color: #20c997;
+        }
+        .estado-badge {
+            font-size: 0.9rem;
+            padding: 8px 15px;
+        }
+        .modalidad-icon {
+            width: 50px;
+            height: 50px;
+            background: #e9ecef;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #495057;
+        }
+        .timeline-item {
+            border-left: 3px solid #28a745;
+            padding-left: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 5px;
+            width: 13px;
+            height: 13px;
+            background: #28a745;
+            border-radius: 50%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'aprendices:inicio' %}">
+                <img width="50px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX6Gat1r36ATdBS7sTqqFH8TvIVPMkqsdLgw&s" alt="Logo Sena">
+                <strong>SENA APP</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'aprendices:inicio' %}">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin:index' %}">Panel Admin</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <div class="container">
+            <p>&copy; 2025 SENA APP - Sistema de Gestión de Aprendices</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

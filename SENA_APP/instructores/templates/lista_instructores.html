@@ -1,28 +1,32 @@
-{{% extends "index.html" %} {# Asegúrate de que esto siempre esté al principio #}
+{% extends "index.html" %}
 
 {% block title %}Lista de Instructores SENA - SENA APP{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
-    {# Título principal de la página, igual que en aprendices #}
-    <h1><i class="bi bi-person-workspace"></i> Lista de Instructores</h1> {# Icono cambiado para instructores #}
 
-    <div class="card shadow-sm mt-4">
+    <!-- Encabezado con botón -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-person-workspace"></i> Lista de Instructores</h1>
+        <a href="{% url 'instructores:crear_instructor' %}" class="btn btn-success">
+            + Agregar Instructor
+        </a>
+    </div>
+
+    <!-- Buscador -->
+    <div class="card shadow-sm mb-4">
         <div class="card-body">
             <label for="searchInput" class="form-label">Buscar instructor:</label>
             <input type="text" id="searchInput" class="form-control search-box" placeholder="Escribe un nombre, documento o especialidad...">
         </div>
     </div>
 
-    <div class="card shadow-sm mt-4">
+    <!-- Tabla de instructores -->
+    <div class="card shadow-sm">
         <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                {# Título secundario y contador de instructores #}
-                <h2>Instructores Registrados</h2>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="mb-0">Instructores Registrados</h2>
                 <span class="badge bg-info fs-6">Total: {{ total_instructores }} Instructores</span>
-                <a href="{% url 'admin:instructores_instructor_add' %}" class="btn btn-success ms-2"> {# Corregido: btn-btn-success a btn btn-success #}
-                    Nuevo Instructor
-                </a>
             </div>
 
             <div class="table-responsive">
@@ -33,40 +37,44 @@
                             <th>Tipo Documento</th>
                             <th>Nombre Completo</th>
                             <th>Correo</th>
-                            <th>Telefono</th>
+                            <th>Teléfono</th>
                             <th>Ciudad</th>
-                            <th>Direccion</th>
+                            <th>Dirección</th>
                             <th>Nivel Educativo</th>
                             <th>Fecha Nacimiento</th>
                             <th>Especialidad</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="instructoresTable"> 
+                    <tbody id="instructoresTable">
                         {% for instructor in lista_instructores %}
                         <tr>
-                            <td><strong><a href="instructor/{{ instructor.id }}">{{ instructor.documento_identidad }}</a></strong></td>
-                            <td>{{ instructor.tipo_documento }}</td>
-                            <td>{{ instructor.nombre_completo }} }}</td>
                             <td>
-                                <a href="mailto:{{ instructor.correo }}">{{ instructor.correo }}</a>
+                                <strong>
+                                    <a href="{% url 'instructores:detalle_instructor' instructor.id %}">
+                                        {{ instructor.documento_identidad }}
+                                    </a>
+                                </strong>
                             </td>
+                            <td>{{ instructor.tipo_documento }}</td>
+                            <td>{{ instructor.nombre_completo }}</td>
+                            <td><a href="mailto:{{ instructor.correo }}">{{ instructor.correo }}</a></td>
                             <td>{{ instructor.telefono }}</td>
                             <td>{{ instructor.ciudad }}</td>
                             <td>{{ instructor.direccion }}</td>
                             <td>{{ instructor.nivel_educativo }}</td>
                             <td>{{ instructor.fecha_nacimiento|date:"d/m/Y" }}</td>
                             <td>{{ instructor.especialidad }}</td>
-                            <>
-                                <a href="{% url 'admin:instructores_instructor_change' instructor.pk %}"
-                                    class="btn btn-sm btn-outline-primary">
-                                    Editar
-                        </a>
-                                <span class="text-muted">N/A</span> 
+                            <td>
+                                <!-- Aquí está la línea corregida -->
+                                <a href="{% url 'instructores:editar_instructor' pk=instructor.id %}" class="btn btn-sm btn-outline-primary">Editar</a>
                             </td>
                         </tr>
-                        {% empty %} 
+                        {% empty %}
                         <tr>
-                            <td colspan="11" class="no-data">⚠️ No hay instructores registrados.</td> 
+                            <td colspan="11" class="text-center text-muted">
+                                ⚠️ No hay instructores registrados.
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -76,10 +84,11 @@
     </div>
 </div>
 
+<!-- Script de búsqueda -->
 <script>
-    document.getElementById("searchInput").addEventListener("keyup", function() {
+    document.getElementById("searchInput").addEventListener("keyup", function () {
         let filtro = this.value.toLowerCase();
-        document.querySelectorAll("#instructoresTable tr").forEach(fila => { {}
+        document.querySelectorAll("#instructoresTable tr").forEach(fila => {
             let texto = fila.textContent.toLowerCase();
             fila.style.display = texto.includes(filtro) ? "" : "none";
         });

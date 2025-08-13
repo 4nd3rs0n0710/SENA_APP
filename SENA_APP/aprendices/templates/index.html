@@ -38,10 +38,10 @@
             transform: scale(1.03);
         }
         .card-body h5 {
-            font-size: 1.25rem; /* Tamaño de fuente para títulos de tarjetas */
+            font-size: 1.25rem;
         }
         .card-text {
-            font-size: 0.9rem; /* Tamaño de fuente para texto de tarjetas */
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -57,7 +57,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link active" href="{% url 'inicio' %}">🏠 Inicio</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'aprendices:lista_aprendices' %}">👥 Lista de Aprendices</a></li>
-                <li class="nav-item"><a class="nav-link" href="/admin/">🔐 Admin</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'instructores:lista_instructores' %}">👨‍🏫 Lista de Instructores</a></li>
             </ul>
         </div>
     </div>
@@ -74,6 +74,7 @@
 <div class="container mt-5">
     {% block content %}
     <div class="row text-center">
+        <!-- Tarjeta para Lista de Aprendices -->
         <div class="col-md-4 mb-4">
             <div class="card shadow p-4 h-100">
                 <i class="bi bi-people-fill text-success" style="font-size: 3rem;"></i>
@@ -84,15 +85,7 @@
             </div>
         </div>
 
-        <div class="col-md-4 mb-4">
-            <div class="card shadow p-4 h-100">
-                <i class="bi bi-shield-lock-fill text-success" style="font-size: 3rem;"></i>
-                <h5 class="mt-3">Panel Administrativo</h5>
-                <p class="card-text">Accede al panel de administración para gestionar usuarios y datos.</p>
-                <a href="/admin/" class="btn btn-success btn-sm mt-auto">Ir al Admin</a>
-            </div>
-        </div>
-
+        <!-- Tarjeta para Lista de Instructores -->
         <div class="col-md-4 mb-4">
             <div class="card shadow p-4 h-100">
                 <i class="bi bi-person-video3 text-success" style="font-size: 3rem;"></i>
@@ -102,9 +95,8 @@
                 <a href="{% url 'instructores:lista_instructores' %}" class="btn btn-success btn-sm mt-auto">Ver Lista</a>
             </div>
         </div>
-    </div>
 
-    <div class="row text-center">
+        <!-- Tarjeta para Lista de Programas -->
         <div class="col-md-4 mb-4">
             <div class="card shadow p-4 h-100">
                 <i class="bi bi-journal-bookmark-fill text-success" style="font-size: 3rem;"></i>
@@ -115,6 +107,7 @@
             </div>
         </div>
 
+        <!-- Tarjeta para Lista de Cursos -->
         <div class="col-md-4 mb-4">
             <div class="card shadow p-4 h-100">
                 <i class="bi bi-book-fill text-success" style="font-size: 3rem;"></i>
@@ -122,15 +115,6 @@
                 <p class="card-text">Consulta todos los cursos registrados en el sistema.</p>
                 <p class="card-text">Total de Cursos: {{ total_cursos }}</p>
                 <a href="{% url 'aprendices:lista_cursos' %}" class="btn btn-success btn-sm mt-auto">Ver Lista</a>
-            </div>
-        </div>
-        
-        <div class="col-md-4 mb-4">
-            <div class="card shadow p-4 h-100">
-                <i class="fas fa-user-plus text-success" style="font-size: 3rem;"></i>
-                <h5 class="mt-3">Agregar Aprendiz</h5>
-                <p class="card-text">Añade un nuevo aprendiz al sistema.</p>
-                <a href="{% url 'aprendices:agregar_aprendiz' %}" class="btn btn-success btn-sm mt-auto">Ir a Agregar</a>
             </div>
         </div>
     </div>
@@ -143,7 +127,6 @@
         <small>Desarrollado con ❤️ por el equipo de formación SENA</small>
         <div class="mt-2">
             <a href="{% url 'inicio' %}" class="text-white me-3"><i class="bi bi-house-door-fill"></i></a>
-            <a href="/admin/" class="text-white me-3"><i class="bi bi-gear-fill"></i></a>
             <a href="https://sena.edu.co" target="_blank" class="text-white"><i class="bi bi-globe"></i></a>
         </div>
     </div>

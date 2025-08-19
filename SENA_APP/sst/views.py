@@ -1,5 +1,8 @@
 from datetime import timezone
 from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
+from SENA_APP.sst.forms import IncidenteSSTForm, InspeccionSSTForm
+from SENA_APP.sst.models import IncidenteSST, InspeccionesSST
 
 # En la vista de inspecciones
 @login_required
@@ -14,10 +17,10 @@ def inspecciones(request):
         else:
             form = InspeccionSSTForm()
             
-        inspecciones_list = InspeccionSST.objects.all().order_by('-fecha')
+        inspecciones_list = InspeccionesSST.objects.all().order_by('-fecha')
         
         # Variables para estadísticas
-        inspecciones_7_dias = InspeccionSST.objects.filter(
+        inspecciones_7_dias = InspeccionesSST.objects.filter(
             fecha_gte=timezone.now() - timezone.timedelta(days=7)
         ).count()
         

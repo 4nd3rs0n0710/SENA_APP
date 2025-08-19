@@ -1,0 +1,84 @@
+{% extends 'sst_app/base.html' %}
+
+{% block content %}
+<h3 class="text-xl font-semibold text-gray-800 mb-4">Documentos y Procedimientos</h3>
+
+<!-- Formulario para agregar documentos -->
+<div class="bg-white p-4 rounded-lg shadow-md mb-6">
+    <h4 class="text-lg font-medium text-gray-900 mb-4">Agregar Nuevo Documento</h4>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label for="{{ form.nombre.id_for_label }}" class="block text-sm font-medium text-gray-700">Nombre del documento</label>
+                {{ form.nombre }}
+            </div>
+            <div>
+                <label for="{{ form.tipo.id_for_label }}" class="block text-sm font-medium text-gray-700">Tipo de documento</label>
+                {{ form.tipo }}
+            </div>
+            <div class="md:col-span-2">
+                <label for="{{ form.archivo.id_for_label }}" class="block text-sm font-medium text-gray-700">Archivo</label>
+                {{ form.archivo }}
+            </div>
+            <div class="md:col-span-2">
+                <label for="{{ form.descripcion.id_for_label }}" class="block text-sm font-medium text-gray-700">Descripción</label>
+                {{ form.descripcion }}
+            </div>
+        </div>
+        <div class="mt-4 text-right">
+            <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+                Guardar Documento
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Lista de documentos -->
+<div class="bg-gray-50 rounded-lg p-4 shadow-inner mb-6">
+    <h4 class="text-lg font-medium text-gray-900 mb-4">Documentos Existentes</h4>
+    <ul class="divide-y divide-gray-200">
+        {% for documento in documentos %}
+        <li class="py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586a2 2 0 011.414.586l4.414 4.414a2 2 0 01.586 1.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
+                    </svg>
+                    <span class="text-sm font-medium text-gray-900">{{ documento.nombre }}</span>
+                </div>
+                <span class="text-xs bg-gray-200 text-gray-800 px-2 py-1 rounded-full">{{ documento.get_tipo_display }}</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-1">Actualizado: {{ documento.fecha_actualizacion|date:"d/m/Y" }}</p>
+        </li>
+        {% empty %}
+        <li class="py-3 text-center text-gray-500">No hay documentos registrados</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- Sección de Jerarquía de Controles -->
+<h3 class="text-xl font-semibold text-gray-800 mb-4">Medidas de Prevención y Control: Jerarquía de Controles</h3>
+<div class="space-y-4">
+    <div class="bg-white rounded-lg p-4 border-l-4 border-red-500 shadow-md">
+        <h4 class="font-bold text-lg text-red-700">1. Eliminación</h4>
+        <p class="text-sm text-gray-600">Es la medida más eficaz. Consiste en eliminar por completo el peligro del lugar de trabajo.</p>
+    </div>
+    <div class="bg-white rounded-lg p-4 border-l-4 border-orange-400 shadow-md">
+        <h4 class="font-bold text-lg text-orange-600">2. Sustitución</h4>
+        <p class="text-sm text-gray-600">Reemplazar un material o proceso peligroso por uno menos peligroso o no peligroso.</p>
+    </div>
+    <div class="bg-white rounded-lg p-4 border-l-4 border-yellow-400 shadow-md">
+        <h4 class="font-bold text-lg text-yellow-600">3. Controles de Ingeniería</h4>
+        <p class="text-sm text-gray-600">Modificar equipos, herramientas o procesos para aislar al trabajador del peligro (ej. sistemas de ventilación).</p>
+    </div>
+    <div class="bg-white rounded-lg p-4 border-l-4 border-blue-500 shadow-md">
+        <h4 class="font-bold text-lg text-blue-700">4. Controles Administrativos</h4>
+        <p class="text-sm text-gray-600">Cambios en la organización del trabajo, procedimientos o capacitaciones (ej. señalización, turnos de trabajo).</p>
+    </div>
+    <div class="bg-white rounded-lg p-4 border-l-4 border-green-500 shadow-md">
+        <h4 class="font-bold text-lg text-green-700">5. EPP (Equipo de Protección Personal)</h4>
+        <p class="text-sm text-gray-600">La medida menos eficaz y la última línea de defensa. Proporcionar y exigir el uso de equipos como cascos, guantes, gafas, etc.</p>
+    </div>
+</div>
+{% endblock %}

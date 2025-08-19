@@ -15,7 +15,6 @@ def lista_aprendices(request):
     return render(request, 'lista_aprendices.html', context)
 
 def editar_aprendiz(request, aprendiz_id):
-    """Maneja la edición de un aprendiz existente."""
     aprendiz = get_object_or_404(Aprendiz, id=aprendiz_id)
     if request.method == 'POST':
         # Nota: Usar ModelForm aquí es más seguro y sencillo que procesar los datos

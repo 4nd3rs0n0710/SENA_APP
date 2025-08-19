@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import InstructorFormView, InstructorUpdateView # Las vistas basadas en clases que estabas usando
+from .views import InstructorFormView, InstructorUpdateView 
 
 app_name = 'instructores'
 

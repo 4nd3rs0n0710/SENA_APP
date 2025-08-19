@@ -2,21 +2,15 @@ from django import forms
 from .models import Programa
 
 class ProgramaForm(forms.ModelForm):
-    """
-    Formulario basado en el modelo Programa para crear y editar instancias.
-    """
     class Meta:
-        # Vinculamos el formulario al modelo Programa
         model = Programa
-        # Especificamos los campos que queremos incluir en el formulario
-        # Excluimos 'fecha_registro' porque se genera automáticamente
         fields = [
             'codigo', 'nombre', 'nivel_formacion', 'modalidad', 
             'duracion_meses', 'duracion_horas', 'descripcion', 
             'competencias', 'perfil_egreso', 'requisitos_ingreso', 
             'centro_formacion', 'regional', 'estado', 'fecha_creacion'
         ]
-        # Podemos personalizar los widgets para un mejor control del HTML
+
         widgets = {
             'codigo': forms.TextInput(attrs={'class': 'form-control'}),
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
@@ -34,7 +28,7 @@ class ProgramaForm(forms.ModelForm):
             # Usamos un widget específico para la fecha
             'fecha_creacion': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
         }
-        # También puedes personalizar las etiquetas si lo deseas
+
         labels = {
             'codigo': 'Código del Programa',
             'nombre': 'Nombre del Programa',

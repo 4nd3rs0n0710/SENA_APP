@@ -1,0 +1,117 @@
+{% extends 'sst_sena/base.html' %}
+
+{% block content %}
+<h3 class="text-xl font-semibold text-gray-800 mb-4">Panel de Control - Centro Minero SENA</h3>
+
+<!-- Información del programa si es aprendiz -->
+{% if programa_usuario %}
+<div class="bg-blue-50 p-4 rounded-lg mb-6 border border-blue-200">
+    <div class="flex items-center">
+        <i class="fas fa-graduation-cap text-blue-600 text-xl mr-3"></i>
+        <div>
+            <h4 class="font-medium text-blue-800">Programa de Formación</h4>
+            <p class="text-sm text-blue-600">{{ programa_usuario.nombre }} - Ficha {{ user.aprendiz.ficha }}</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div class="bg-green-100 p-6 rounded-lg shadow-md flex items-center">
+        <i class="fas fa-file-alt text-green-600 text-2xl mr-4"></i>
+        <div>
+            <p class="text-gray-500 text-sm font-medium">Documentos de SST</p>
+            <p class="text-2xl font-bold text-gray-900">{{ total_documentos }}</p>
+        </div>
+    </div>
+    <div class="bg-red-100 p-6 rounded-lg shadow-md flex items-center">
+        <i class="fas fa-exclamation-triangle text-red-600 text-2xl mr-4"></i>
+        <div>
+            <p class="text-gray-500 text-sm font-medium">Incidentes Reportados</p>
+            <p class="text-2xl font-bold text-gray-900">{{ total_incidentes }}</p>
+        </div>
+    </div>
+    <div class="bg-blue-100 p-6 rounded-lg shadow-md flex items-center">
+        <i class="fas fa-clipboard-check text-blue-600 text-2xl mr-4"></i>
+        <div>
+            <p class="text-gray-500 text-sm font-medium">Inspecciones (7 días)</p>
+            <p class="text-2xl font-bold text-gray-900">{{ inspecciones_recientes }}</p>
+        </div>
+    </div>
+    <div class="bg-yellow-100 p-6 rounded-lg shadow-md flex items-center">
+        <i class="fas fa-hard-hat text-yellow-600 text-2xl mr-4"></i>
+        <div>
+            <p class="text-gray-500 text-sm font-medium">EPP Verificados</p>
+            <p class="text-2xl font-bold text-gray-900">98%</p>
+        </div>
+    </div>
+</div>
+
+<!-- Distribución de incidentes por nivel de riesgo -->
+<div class="bg-white p-6 rounded-lg shadow-md mb-6">
+    <h4 class="text-lg font-semibold text-gray-800 mb-4">Distribución de Incidentes por Nivel de Riesgo</h4>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-green-100 p-4 rounded-lg text-center">
+            <div class="w-8 h-8 rounded-full color-bajo mx-auto mb-2"></div>
+            <p class="text-sm text-gray-600">Bajo</p>
+            <p class="text-xl font-bold text-gray-900">
+                {% for item in incidentes_por_riesgo %}
+                    {% if item.nivel_riesgo == 'BAJO' %}{{ item.total }}{% endif %}
+                {% endfor %}
+            </p>
+        </div>
+        <div class="bg-yellow-100 p-4 rounded-lg text-center">
+            <div class="w-8 h-8 rounded-full color-medio mx-auto mb-2"></div>
+            <p class="text-sm text-gray-600">Medio</p>
+            <p class="text-xl font-bold text-gray-900">
+                {% for item in incidentes_por_riesgo %}
+                    {% if item.nivel_riesgo == 'MEDIO' %}{{ item.total }}{% endif %}
+                {% endfor %}
+            </p>
+        </div>
+        <div class="bg-orange-100 p-4 rounded-lg text-center">
+            <div class="w-8 h-8 rounded-full color-alto mx-auto mb-2"></div>
+            <p class="text-sm text-gray-600">Alto</p>
+            <p class="text-xl font-bold text-gray-900">
+                {% for item in incidentes_por_riesgo %}
+                    {% if item.nivel_riesgo == 'ALTO' %}{{ item.total }}{% endif %}
+                {% endfor %}
+            </p>
+        </div>
+        <div class="bg-red-100 p-4 rounded-lg text-center">
+            <div class="w-8 h-8 rounded-full color-critico mx-auto mb-2"></div>
+            <p class="text-sm text-gray-600">Crítico</p>
+            <p class="text-xl font-bold text-gray-900">
+                {% for item in incidentes_por_riesgo %}
+                    {% if item.nivel_riesgo == 'CRITICO' %}{{ item.total }}{% endif %}
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Recordatorios importantes -->
+<div class="bg-sena text-white p-6 rounded-lg shadow-md">
+    <h4 class="text-lg font-semibold mb-4 flex items-center">
+        <i class="fas fa-info-circle mr-2"></i> Recordatorios Importantes
+    </h4>
+    <ul class="space-y-2 text-sm">
+        <li class="flex items-start">
+            <i class="fas fa-check-circle mt-1 mr-2"></i>
+            <span>Verifica tu EPP antes de ingresar a las áreas de práctica minera</span>
+        </li>
+        <li class="flex items-start">
+            <i class="fas fa-check-circle mt-1 mr-2"></i>
+            <span>Conoce las rutas de evacuación y puntos de encuentro</span>
+        </li>
+        <li class="flex items-start">
+            <i class="fas fa-check-circle mt-1 mr-2"></i>
+            <span>Reporta cualquier condición insegura a tu instructor inmediatamente</span>
+        </li>
+        <li class="flex items-start">
+            <i class="fas fa-check-circle mt-1 mr-2"></i>
+            <span>Participa en las capacitaciones programadas de SST</span>
+        </li>
+    </ul>
+</div>
+{% endblock %}

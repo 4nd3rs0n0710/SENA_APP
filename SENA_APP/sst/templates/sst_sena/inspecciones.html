@@ -1,0 +1,184 @@
+{% extends 'sst_sena/base.html' %}
+
+{% block content %}
+<h3 class="text-xl font-semibold text-gray-800 mb-4">Inspecciones de Seguridad - Centro Minero SENA</h3>
+
+<!-- Formulario de inspección -->
+<form method="post" class="space-y-4 mb-8">
+    {% csrf_token %}
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <h4 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
+            <i class="fas fa-clipboard-check text-sena mr-2"></i>Nueva Inspección de Seguridad
+        </h4>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+                <label for="{{ form.area.id_for_label }}" class="block text-sm font-medium text-gray-700">Área a inspeccionar *</label>
+                {{ form.area }}
+                <p class="text-xs text-gray-500 mt-1">Ej: Taller de Maquinaria Pesada, Laboratorio de Explosivos, Zona de Perforación</p>
+            </div>
+            <div>
+                <label for="{{ form.programa_formacion.id_for_label }}" class="block text-sm font-medium text-gray-700">Programa de Formación *</label>
+                {{ form.programa_formacion }}
+            </div>
+        </div>
+
+        <div class="bg-gray-50 p-4 rounded-lg shadow-inner mb-4">
+            <h4 class="font-medium text-gray-900 mb-3 flex items-center">
+                <i class="fas fa-list-check text-sena mr-2"></i>Checklist de Seguridad Minera
+            </h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="flex items-start p-2 bg-white rounded">
+                    {{ form.epp_correcto }}
+                    <label for="{{ form.epp_correcto.id_for_label }}" class="ml-2 block text-sm text-gray-900">
+                        ¿Se utiliza el EPP adecuado para la actividad?
+                    </label>
+                </div>
+                <div class="flex items-start p-2 bg-white rounded">
+                    {{ form.herramientas_adecuadas }}
+                    <label for="{{ form.herramientas_adecuadas.id_for_label }}" class="ml-2 block text-sm text-gray-900">
+                        ¿Las herramientas son las adecuadas y están en buen estado?
+                    </label>
+                </div>
+                <div class="flex items-start p-2 bg-white rounded">
+                    {{ form.ventilacion_verificada }}
+                    <label for="{{ form.ventilacion_verificada.id_for_label }}" class="ml-2 block text-sm text-gray-900">
+                        ¿Sistemas de ventilación funcionando correctamente?
+                    </label>
+                </div>
+                <div class="flex items-start p-2 bg-white rounded">
+                    {{ form.senalizacion_visible }}
+                    <label for="{{ form.senalizacion_visible.id_for_label }}" class="ml-2 block text-sm text-gray-900">
+                        ¿Señalización de seguridad visible y comprensible?
+                    </label>
+                </div>
+                <div class="flex items-start p-2 bg-white rounded">
+                    {{ form.area_ordenada }}
+                    <label for="{{ form.area_ordenada.id_for_label }}" class="ml-2 block text-sm text-gray-900">
+                        ¿Área de trabajo limpia y ordenada?
+                    </label>
+                </div>
+                <div class="flex items-start p-2 bg-white rounded">
+                    {{ form.equipos_apagados }}
+                    <label for="{{ form.equipos_apagados.id_for_label }}" class="ml-2 block text-sm text-gray-900">
+                        ¿Equipos apagados y energías cero durante mantenimiento?
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <label for="{{ form.observaciones.id_for_label }}" class="block text-sm font-medium text-gray-700">Observaciones y Hallazgos</label>
+            {{ form.observaciones }}
+            <p class="text-xs text-gray-500 mt-1">Describa condiciones inseguras, actos inseguros o buenas prácticas observadas</p>
+        </div>
+
+        <div class="mt-6 text-right">
+            <button type="submit" class="inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-sena hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                <i class="fas fa-save mr-2"></i>Registrar Inspección
+            </button>
+        </div>
+    </div>
+</form>
+
+<!-- Historial de inspecciones -->
+<div class="bg-white rounded-lg shadow-md p-6">
+    <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+        <i class="fas fa-history text-sena mr-2"></i>Historial de Inspecciones
+    </h4>
+    
+    {% if inspecciones %}
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Área</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Programa</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Inspector</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for inspeccion in inspecciones %}
+                <tr>
+                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {{ inspeccion.fecha|date:"d/m/Y H:i" }}
+                    </td>
+                    <td class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {{ inspeccion.area }}
+                    </td>
+                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {{ inspeccion.programa_formacion.nombre }}
+                    </td>
+                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {{ inspeccion.inspector.get_full_name|default:inspeccion.inspector.username }}
+                    </td>
+                    <td class="px-4 py-4 whitespace-nowrap">
+                        {% with total_checks=6 %}
+                        {% with checks_ok=inspeccion.epp_correcto|add:inspeccion.herramientas_adecuadas|add:inspeccion.ventilacion_verificada|add:inspeccion.senalizacion_visible|add:inspeccion.area_ordenada|add:inspeccion.equipos_apagados %}
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
+                            {% if checks_ok == total_checks %}bg-green-100 text-green-800
+                            {% elif checks_ok >= total_checks|add:"-2" %}bg-yellow-100 text-yellow-800
+                            {% else %}bg-red-100 text-red-800{% endif %}">
+                            {{ checks_ok }}/{{ total_checks }}
+                        </span>
+                        {% endwith %}
+                        {% endwith %}
+                    </td>
+                    <td class="px-4 py-4 whitespace-nowrap text-sm font-medium">
+                        <a href="#" class="text-sena hover:text-green-700 mr-3">
+                            <i class="fas fa-eye"></i> Ver
+                        </a>
+                        {% if user == inspeccion.inspector or user.instructor %}
+                        <a href="#" class="text-red-600 hover:text-red-900">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="text-center py-8 bg-gray-50 rounded-lg">
+        <i class="fas fa-clipboard-list text-gray-300 text-4xl mb-2"></i>
+        <p class="text-gray-500">No hay inspecciones registradas</p>
+        <p class="text-sm text-gray-400 mt-1">Realice la primera inspección utilizando el formulario superior</p>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Estadísticas rápidas -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+    <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle text-blue-600 text-xl mr-3"></i>
+            <div>
+                <p class="text-2xl font-bold text-blue-800">{{ inspecciones|length }}</p>
+                <p class="text-sm text-blue-600">Inspecciones totales</p>
+            </div>
+        </div>
+    </div>
+    <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+        <div class="flex items-center">
+            <i class="fas fa-calendar-check text-green-600 text-xl mr-3"></i>
+            <div>
+                <p class="text-2xl font-bold text-green-800">{{ inspecciones_7_dias }}</p>
+                <p class="text-sm text-green-600">Últimos 7 días</p>
+            </div>
+        </div>
+    </div>
+    <div class="bg-orange-50 p-4 rounded-lg border border-orange-200">
+        <div class="flex items-center">
+            <i class="fas fa-exclamation-triangle text-orange-600 text-xl mr-3"></i>
+            <div>
+                <p class="text-2xl font-bold text-orange-800">{{ hallazgos_criticos }}</p>
+                <p class="text-sm text-orange-600">Hallazgos críticos</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

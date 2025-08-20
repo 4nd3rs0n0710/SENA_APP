@@ -61,24 +61,24 @@
             <!-- Navegación de pestañas -->
             <div class="border-b border-gray-200">
                 <nav class="flex flex-col sm:flex-row -mb-px" role="tablist" aria-label="Tabs del módulo SST">
-                    <a href="{% url 'sst_sena:dashboard' %}" class="tab-button flex-1 py-4 px-6 text-center text-sm font-medium text-gray-700 hover:text-sena focus:outline-none transition duration-150 ease-in-out border-b-2 border-transparent hover:border-gray-300 {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                    <a href="{% url 'sst:dashboard' %}" class="tab-button flex-1 py-4 px-6 text-center text-sm font-medium text-gray-700 hover:text-sena focus:outline-none transition duration-150 ease-in-out border-b-2 border-transparent hover:border-gray-300 {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
                         <i class="fas fa-tachometer-alt mr-2"></i>
                         Dashboard
                     </a>
-                    <a href="{% url 'sst_sena:documentos' %}" class="tab-button flex-1 py-4 px-6 text-center text-sm font-medium text-gray-700 hover:text-sena focus:outline-none transition duration-150 ease-in-out border-b-2 border-transparent hover:border-gray-300 {% if request.resolver_match.url_name == 'documentos' %}active{% endif %}">
+                    <a href="{% url 'sst:documentos' %}" class="tab-button flex-1 py-4 px-6 text-center text-sm font-medium text-gray-700 hover:text-sena focus:outline-none transition duration-150 ease-in-out border-b-2 border-transparent hover:border-gray-300 {% if request.resolver_match.url_name == 'documentos' %}active{% endif %}">
                         <i class="fas fa-file-alt mr-2"></i>
                         Documentos
                     </a>
-                    <a href="{% url 'sst_sena:inspecciones' %}" class="tab-button flex-1 py-4 px-6 text-center text-sm font-medium text-gray-700 hover:text-sena focus:outline-none transition duration-150 ease-in-out border-b-2 border-transparent hover:border-gray-300 {% if request.resolver_match.url_name == 'inspecciones' %}active{% endif %}">
+                    <a href="{% url 'sst:inspecciones' %}" class="tab-button flex-1 py-4 px-6 text-center text-sm font-medium text-gray-700 hover:text-sena focus:outline-none transition duration-150 ease-in-out border-b-2 border-transparent hover:border-gray-300 {% if request.resolver_match.url_name == 'inspecciones' %}active{% endif %}">
                         <i class="fas fa-clipboard-check mr-2"></i>
                         Inspecciones
                     </a>
-                    <a href="{% url 'sst_sena:incidentes' %}" class="tab-button flex-1 py-4 px-6 text-center text-sm font-medium text-gray-700 hover:text-sena focus:outline-none transition duration-150 ease-in-out border-b-2 border-transparent hover:border-gray-300 {% if request.resolver_match.url_name == 'incidentes' %}active{% endif %}">
+                    <a href="{% url 'sst:incidentes' %}" class="tab-button flex-1 py-4 px-6 text-center text-sm font-medium text-gray-700 hover:text-sena focus:outline-none transition duration-150 ease-in-out border-b-2 border-transparent hover:border-gray-300 {% if request.resolver_match.url_name == 'incidentes' %}active{% endif %}">
                         <i class="fas fa-exclamation-triangle mr-2"></i>
                         Reporte de Incidentes
                     </a>
                     {% if user.instructor %}
-                    <a href="{% url 'sst_sena:reportes' %}" class="tab-button flex-1 py-4 px-6 text-center text-sm font-medium text-gray-700 hover:text-sena focus:outline-none transition duration-150 ease-in-out border-b-2 border-transparent hover:border-gray-300 {% if request.resolver_match.url_name == 'reportes' %}active{% endif %}">
+                    <a href="{% url 'sst:reportes' %}" class="tab-button flex-1 py-4 px-6 text-center text-sm font-medium text-gray-700 hover:text-sena focus:outline-none transition duration-150 ease-in-out border-b-2 border-transparent hover:border-gray-300 {% if request.resolver_match.url_name == 'reportes' %}active{% endif %}">
                         <i class="fas fa-chart-bar mr-2"></i>
                         Reportes
                     </a>

@@ -18,10 +18,10 @@ class CentroFormacionAdmin(admin.ModelAdmin):
 
 @admin.register(DocumentoSST)
 class DocumentoSSTAdmin(admin.ModelAdmin):
-    list_display = ['titulo', 'fecha_subida', 'subido_por']
-    list_filter = ['fecha_subida']
-    search_fields = ['titulo', 'descripcion']
-    ordering = ['-fecha_subida']
+    list_display = ['nombre', 'fecha_creacion', 'tipo']
+    list_filter = ['fecha_creacion']
+    search_fields = ['nombre', 'descripcion']
+    ordering = ['-fecha_creacion']
     list_per_page = 20
 
 @admin.register(InspeccionesSST)

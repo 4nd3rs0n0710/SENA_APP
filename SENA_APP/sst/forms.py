@@ -1,5 +1,6 @@
 from django import forms 
-from sst.models import DocumentoSST, InspeccionSST, IncidenteSST
+from sst.models import DocumentoSST, InspeccionesSST, IncidenteSST
+from aprendices.models import Aprendiz
 
 class DocumentoSSTForm(forms.ModelForm):
     class Meta:
@@ -12,7 +13,7 @@ class DocumentoSSTForm(forms.ModelForm):
 
 class InspeccionSSTForm(forms.ModelForm):
     class Meta:
-        model = InspeccionSST
+        model = InspeccionesSST
         fields = [
             'area', 'programa_formacion', 'epp_correcta', 'herramientas_adecuadas',
             'ventilacion_verificada', 'senalizacion_visible', 'area_ordenada',
@@ -39,6 +40,6 @@ class IncidenteSSTForm(forms.ModelForm):
         if 'programa_formacion' in self.data:
             try:
                 programa_id = int(self.data.get('programa_formacion'))
-                self.fields['aprendiz_involucrado'].queryset = Aprendiz.objects.filter(programa_formacion_id=programa_id)
+                self.fields['aprendiz_involucrado'].queryset = Aprendiz.objects.filter(programa=programa_id)
             except (ValueError, TypeError):
                 pass

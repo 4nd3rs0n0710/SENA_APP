@@ -44,7 +44,7 @@ class InspeccionesSST(models.Model):
     fecha = models.DateTimeField(default=timezone.now)
     inspector = models.ForeignKey(User, on_delete=models.CASCADE)
     programa_formacion = models.ForeignKey(Programa, on_delete=models.CASCADE)
-    epp_correcto = models.BooleanField(default=False)
+    epp_correcta = models.BooleanField(default=False)
     herramientas_adecuadas = models.BooleanField(default=False)
     ventilacion_verificada = models.BooleanField(default=False)
     senalizacion_visible = models.BooleanField(default=False)

@@ -1,5 +1,5 @@
 from django.db.models import Count
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from datetime import timedelta
@@ -172,3 +172,12 @@ def reportes_estadisticas(request):
         'inspecciones_por_mes': inspecciones_por_mes,
     }
     return render(request, 'sst/reportes.html', context)
+
+def ver_inspeccion(request, pk):
+    # Obtiene el objeto de inspección especifico o devuelve un error 404 si no existe
+    inspeccion = get_object_or_404(InspeccionesSST, pk=pk)
+    
+    context = {
+        'inspeccion': inspeccion
+    }
+    return render(request, 'sst_sena/ver_inspeccion.html', context)

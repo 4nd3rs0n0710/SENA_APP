@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views import generic
+from django.db.models import Count
 from .models import Aprendiz, Curso
 from instructores.models import Instructor
 from programas.models import Programa
@@ -15,16 +15,14 @@ def lista_aprendices(request):
     return render(request, 'lista_aprendices.html', context)
 
 def editar_aprendiz(request, aprendiz_id):
+    """Permite editar la información de un aprendiz."""
     aprendiz = get_object_or_404(Aprendiz, id=aprendiz_id)
     if request.method == 'POST':
-        # Nota: Usar ModelForm aquí es más seguro y sencillo que procesar los datos
-        # manualmente como lo estabas haciendo.
         form = AprendizForm(request.POST, instance=aprendiz)
         if form.is_valid():
             form.save()
             return redirect('aprendices:lista_aprendices')
     else:
-        # Crea una instancia del formulario con los datos del aprendiz existente.
         form = AprendizForm(instance=aprendiz)
     
     context = {
@@ -90,19 +88,13 @@ def detalle_aprendiz(request, aprendiz_id):
 def agregar_aprendiz(request):
     """
     Vista para agregar un nuevo aprendiz usando ModelForm.
-    Esta es la función que estabas buscando para guardar los datos.
     """
     if request.method == 'POST':
         form = AprendizForm(request.POST)
         if form.is_valid():
             form.save()
-            # Redirige a la lista de aprendices después de guardar
             return redirect('aprendices:lista_aprendices')
     else:
         form = AprendizForm()
     
     return render(request, 'agregar_aprendiz.html', {'form': form})
-
-# Se ha eliminado la clase AprendizFormView para evitar conflictos.
-# Si quieres usarla, deberías eliminar la función `agregar_aprendiz` y
-# asegurarte de que tu `urls.py` esté configurado para la clase.

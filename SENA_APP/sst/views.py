@@ -1,6 +1,6 @@
 from django.db.models import Count
 from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils import timezone
 from datetime import timedelta
 from django.db.models import Q
@@ -9,22 +9,29 @@ from sst.models import DocumentoSST, IncidenteSST, InspeccionesSST
 from aprendices.models import Aprendiz
 from programas.models import Programa
 from instructores.models import Instructor
-from django.contrib.auth.decorators import user_passes_test
+# El módulo 'cursos' no existe, por lo que la importación se mantiene comentada para evitar errores.
+# from cursos.models import Curso
 
 @login_required
 def dashboard(request):
-    # Estadisticas generales
+    # Estadísticas de totales
     total_documentos = DocumentoSST.objects.count()
     total_incidentes = IncidenteSST.objects.count()
-    
-    # Inspecciones de los ultimos 7 dias
+    total_aprendices = Aprendiz.objects.count()
+    total_instructores = Instructor.objects.count()
+    total_programas = Programa.objects.count()
+    # Si tienes un modelo de Cursos y lo configuras, descomenta la línea de abajo.
+    # total_cursos = Curso.objects.count()
+
+    # Estadísticas de inspecciones recientes
     inspecciones_recientes = InspeccionesSST.objects.filter(
         fecha__gte=timezone.now() - timezone.timedelta(days=7)
     ).count()
-    # Incidentes por nivel de riesgo
+
+    # Estadísticas de incidentes por nivel de riesgo
     incidentes_por_riesgo = IncidenteSST.objects.values('nivel_riesgo').annotate(total=Count('id'))
     
-    # Obtener programa de formacion del usuario si es aprendiz
+    # Obtener el programa de formación del usuario si es un aprendiz
     programa_usuario = None
     if hasattr(request.user, 'aprendiz'):
         programa_usuario = request.user.Aprendiz.programa
@@ -35,6 +42,10 @@ def dashboard(request):
         'inspecciones_recientes': inspecciones_recientes,
         'incidentes_por_riesgo': incidentes_por_riesgo,
         'programa_usuario': programa_usuario,
+        'total_aprendices': total_aprendices,
+        'total_instructores': total_instructores,
+        'total_programas': total_programas,
+        # 'total_cursos': total_cursos,
     }
     
     return render(request, 'sst_sena/dashboard.html', context)
@@ -83,11 +94,8 @@ def inspecciones(request):
         fecha__gte=timezone.now() - timedelta(days=7)
     ).count()
     
-    hallazgos_criticos = 0  # TODO: Implementar lógica real
+    hallazgos_criticos = 0
     
-    # 2. Corrección del filtro:
-    #    Se usa 'programa' en lugar de 'programa_formacion'
-    #    porque ese es el nombre del campo en el modelo InspeccionesSST
     if hasattr(request.user, 'aprendiz'):
         programa = request.user.aprendiz.programa
         inspecciones_list = inspecciones_list.filter(programa=programa)
@@ -133,13 +141,12 @@ def incidentes(request):
     if ultimo_accidente:
         dias_sin_accidentes = (timezone.now().date() - ultimo_accidente.fecha.date()).days
     else:
-        dias_sin_accidentes = 365  # Valor por defecto si no hay
+        dias_sin_accidentes = 365
     
     # Filtrar por programa si es aprendiz
     if hasattr(request.user, 'aprendiz'):
         programa = request.user.aprendiz.programa
         incidentes_list = incidentes_list.filter(programa=programa)
-        # Limitar el campo aprendiz_involucrado
         form.fields['aprendiz_involucrado'].queryset = Aprendiz.objects.filter(programa=programa)
             
     context = {
@@ -173,9 +180,7 @@ def reportes_estadisticas(request):
     return render(request, 'sst_sena/reportes.html', context)
 
 def ver_inspeccion(request, pk):
-    # Obtiene el objeto de inspección especifico o devuelve un error 404 si no existe
     inspeccion = get_object_or_404(InspeccionesSST, pk=pk)
-    
     context = {
         'inspeccion': inspeccion
     }

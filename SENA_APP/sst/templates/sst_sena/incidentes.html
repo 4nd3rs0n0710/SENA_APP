@@ -3,7 +3,6 @@
 {% block content %}
 <h3 class="text-xl font-semibold text-gray-800 mb-4">Reporte de Incidentes y Accidentes - Centro Minero SENA</h3>
 
-<!-- Formulario de incidente -->
 <form method="post" class="space-y-4 mb-8">
     {% csrf_token %}
     <div class="bg-white p-6 rounded-lg shadow-md">
@@ -83,7 +82,6 @@
     </div>
 </form>
 
-<!-- Historial de incidentes -->
 <div class="bg-white rounded-lg shadow-md p-6">
     <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
         <i class="fas fa-list-alt text-sena mr-2"></i>Historial de Incidentes Reportados
@@ -114,7 +112,7 @@
                             {% elif incidente.tipo == 'INC' %}bg-orange-100 text-orange-800
                             {% elif incidente.tipo == 'NOV' %}bg-yellow-100 text-yellow-800
                             {% else %}bg-blue-100 text-blue-800{% endif %}">
-                            {{ incidente.get_tipo_display }}
+                                {{ incidente.get_tipo_display }}
                         </span>
                     </td>
                     <td class="px-4 py-4 text-sm text-gray-900">
@@ -130,7 +128,7 @@
                         {{ incidente.reportado_por.get_full_name|default:incidente.reportado_por.username }}
                     </td>
                     <td class="px-4 py-4 whitespace-nowrap text-sm font-medium">
-                        <a href="#" class="text-sena hover:text-green-700 mr-3">
+                        <a href="{% url 'sst:detalle_incidente' pk=incidente.pk %}" class="text-sena hover:text-green-700 mr-3">
                             <i class="fas fa-eye"></i> Ver
                         </a>
                         {% if user == incidente.reportado_por or user.instructor %}
@@ -153,7 +151,6 @@
     {% endif %}
 </div>
 
-<!-- Información importante -->
 <div class="bg-red-50 border border-red-200 rounded-lg p-4 mt-6">
     <h4 class="font-semibold text-red-800 flex items-center">
         <i class="fas fa-exclamation-circle mr-2"></i>Procedimiento en caso de emergencia
@@ -166,7 +163,6 @@
     </ul>
 </div>
 
-<!-- Estadísticas -->
 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
     <div class="bg-white p-4 rounded-lg shadow-sm border-t-4 border-green-500">
         <p class="text-2xl font-bold text-gray-900">{{ total_incidentes }}</p>

@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import user_passes_test
 
 @login_required
 def dashboard(request):
-    #Estadisticas generales
+    # Estadisticas generales
     total_documentos = DocumentoSST.objects.count()
     total_incidentes = IncidenteSST.objects.count()
     
@@ -28,7 +28,7 @@ def dashboard(request):
     programa_usuario = None
     if hasattr(request.user, 'aprendiz'):
         programa_usuario = request.user.Aprendiz.programa
-        
+    
     context = {
         'total_documentos': total_documentos,
         'total_incidentes': total_incidentes,
@@ -36,7 +36,7 @@ def dashboard(request):
         'incidentes_por_riesgo': incidentes_por_riesgo,
         'programa_usuario': programa_usuario,
     }
-        
+    
     return render(request, 'sst_sena/dashboard.html', context)
     
 
@@ -56,12 +56,11 @@ def documentos(request):
             return redirect('sst:documentos')
     else:
         form = DocumentoSSTForm()
-        context = {
-            'documentos': documentos_list,
-            'form': form,
-        }
-        return render(request, 'sst_sena/documentos.html', context)
-
+    context = {
+        'documentos': documentos_list,
+        'form': form,
+    }
+    return render(request, 'sst_sena/documentos.html', context)
 
 
 # === Vista de Inspecciones ===
@@ -154,11 +153,11 @@ def incidentes(request):
     return render(request, 'sst_sena/incidentes.html', context)
 
 @login_required
-@user_passes_test(Instructor)
+@user_passes_test(lambda u: u.is_instructor)
 def reportes_estadisticas(request):
-    #Estadisticas para instructores
+    # Estadisticas para instructores
     incidentes_por_programa = IncidenteSST.objects.values(
-        'programa_formacion_nombre'
+        'programa_formacion__nombre'
     ).annotate(total=Count('id'))
     
     inspecciones_por_mes = InspeccionesSST.objects.filter(
@@ -171,7 +170,7 @@ def reportes_estadisticas(request):
         'incidentes_por_programa': incidentes_por_programa,
         'inspecciones_por_mes': inspecciones_por_mes,
     }
-    return render(request, 'sst/reportes.html', context)
+    return render(request, 'sst_sena/reportes.html', context)
 
 def ver_inspeccion(request, pk):
     # Obtiene el objeto de inspección especifico o devuelve un error 404 si no existe
@@ -181,3 +180,10 @@ def ver_inspeccion(request, pk):
         'inspeccion': inspeccion
     }
     return render(request, 'sst_sena/ver_inspeccion.html', context)
+
+def detalle_incidente(request, pk):
+    incidente = get_object_or_404(IncidenteSST, pk=pk)
+    context = {
+        'incidente': incidente
+    }
+    return render(request, 'sst_sena/detalle_incidente.html', context)

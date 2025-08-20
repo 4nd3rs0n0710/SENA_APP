@@ -10,5 +10,7 @@ urlpatterns = [
     path('incidentes/', views.incidentes, name='incidentes'),
     path('reportes/', views.reportes_estadisticas, name='reportes'),
     path('inspecciones/<int:pk>/', views.ver_inspeccion, name='ver_inspeccion'),
+    
+    # La línea corregida está aquí 👇
+    path('incidentes/<int:pk>/', views.detalle_incidente, name='detalle_incidente'),
 ]
-
